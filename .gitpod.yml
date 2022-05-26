@@ -14,3 +14,7 @@ ports:
    onOpen: ignore
  - port: 3000
    onOpen: ignore
+
+vscode:
+  extensions:
+    - mtxr.sqltools-driver-pg
