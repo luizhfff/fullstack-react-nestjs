@@ -8,7 +8,9 @@ tasks:
    command: npm start
 
 ports:
- - port: 3000
-   onOpen: ignore
  - port: 5432
+   onOpen: ignore
+   - port: 5000
+   onOpen: ignore
+   - port: 3000
    onOpen: ignore
