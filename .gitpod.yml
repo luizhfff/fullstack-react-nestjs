@@ -1,0 +1,14 @@
+image: gitpod/workspace-postgres
+tasks:
+ - name: Initialize backend
+   init: cd ./backend && npm install --silent
+   command: npm start
+ - name: Initialize frontend
+   init: cd ./frontend && npm install --silent
+   command: npm start
+
+ports:
+ - port: 3000
+   onOpen: ignore
+ - port: 5432
+   onOpen: ignore
