@@ -2,10 +2,10 @@ image: gitpod/workspace-postgres
 tasks:
  - name: Initialize backend
    init: npm i -g @nestjs/cli --silent && cd backend && npm install --silent
-   command: npm start
+   command: cd backend && npm start
  - name: Initialize frontend
    init: cd frontend && npm install --silent
-   command: npm start
+   command: cd frontend && npm start
 
 ports:
  - port: 5432
