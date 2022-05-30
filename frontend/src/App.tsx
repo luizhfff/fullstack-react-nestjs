@@ -2,33 +2,38 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 import axios from 'axios'
+import DisplayUsers from './components/DisplayUsers';
+import CreateUser from './components/CreateUser';
 
-function App() {
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const App = () => {
   const [users, setUsers] = useState([])
 
   useEffect(() => {
-    if (users.length === 0) {
-      axios.get('https://5000-luizhfff-fullstackreact-w7j5adl4t9s.ws-us46.gitpod.io/user').then(data => setUsers(data.data))
-      console.log(users)
-    }
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/user`)
+      .then(data => {
+        setUsers(data.data)
+      })
   }, [users])
 
-  const removeElement = (id:number) => {
-    axios.delete('https://5000-luizhfff-fullstackreact-w7j5adl4t9s.ws-us46.gitpod.io/user', { data: { id: id } })
+  const removeElement = (id: number) => {
+    axios.delete(`${process.env.REACT_APP_BACKEND_URL}/user/${id}`)
   }
 
   return (
-    <div className="App">
-      Test
-      {users && users.map((user: any,index: number) => (
-        <>
-          <div key={index}>{`${user.firstName} ${user.lastName}`}</div>
-          <button onClick={() => removeElement(index)}>Delete</button>
-        </>
-
-      ))}
-    </div>
+    <>
+      <ToastContainer />
+      <div className="container mx-auto">
+        <DisplayUsers users={users} removeFunc={removeElement} />
+        <div className="divider"></div>
+        <CreateUser />
+      </div >
+    </>
   );
 }
 
 export default App;
+
+

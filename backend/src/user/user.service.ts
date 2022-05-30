@@ -30,4 +30,12 @@ export class UserService {
     user.isActive = userDto.isActive
     return this.userRepository.save(user);
   }
+
+  update(id: number, userDto: UserDto): Promise<User> {
+    const user = new User()
+    user.firstName = userDto.firstName;
+    user.lastName = userDto.lastName;
+    user.isActive = userDto.isActive
+    return this.userRepository.save({ ...user, id: Number(id) })
+  }
 }
