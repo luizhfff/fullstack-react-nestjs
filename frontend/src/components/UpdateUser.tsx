@@ -20,7 +20,7 @@ const UpdateUser = (props: Props) => {
       setFirstName(data.data.firstName)
       setLastName(data.data.lastName)
     })
-  
+  // eslint-disable-next-line
   }, [])
   
 
