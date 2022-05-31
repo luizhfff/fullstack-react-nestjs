@@ -1,30 +1,38 @@
 version: '3'
 services:
   db:
-    image: 'postgres:latest'
+    image: 'postgres:11'
     container_name: postgres_db
+    network_mode: host
     ports:
-      - 5432:5432
+      - "54320:5432"
+    expose:
+      - "54320"
     environment:
       POSTGRES_USER: gitpod
       POSTGRES_PASSWORD: gitpod
       POSTGRES_DB: postgres
-    network_mode: host
 
   backend:
     container_name: backend
+    network_mode: host
     build:
       context: backend
       dockerfile: "Dockerfile"
-    network_mode: host
     ports:
-      - 5000:5000
+      - "5001:5000"
+    depends_on:
+      - db
+    environment:
+      - WAIT_SLEEP_INTERVAL=30
 
   frontend:
     container_name: frontend
+    network_mode: host
     build:
       context: frontend
       dockerfile: "Dockerfile"
-    network_mode: host
     ports:
-      - 3000:80
+      - "3000:80"
+    depends_on:
+      - backend

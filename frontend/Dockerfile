@@ -1,17 +1,11 @@
 FROM nginx:latest
 
-WORKDIR /frontend
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+RUN apt-get install -y nodejs
 
-RUN apt-get update -y
-RUN apt-get install -y nodejs npm
-
-COPY package.json package.json
+COPY . .
 
 RUN npm install --silent
-
-COPY public public
-COPY src src
-COPY .env* .
 
 RUN npm run build
 
