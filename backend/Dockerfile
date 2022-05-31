@@ -1,6 +1,6 @@
 FROM node:lts
 
-COPY package.json .
+COPY . .
 
 RUN npm install --silent
 
