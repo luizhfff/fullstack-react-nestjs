@@ -1,19 +1,40 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 import { toast } from 'react-toastify';
 
 type Props = {
-    user : {firstName: string, lastName: string, isActive: boolean, id: number}
+    id : number
 }
 
-const EditUser = (props: Props) => {
-  const [firstName, setFirstName] = useState(props.user.firstName)
-  const [lastName, setLastName] = useState(props.user.lastName)
+const UpdateUser = (props: Props) => {
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const navigate = useNavigate()
 
-  const createUser = () => {
+  useEffect(() => {
+    axios
+    .get(`${process.env.REACT_APP_BACKEND_URL}/user/${props.id}`)
+    .then(data => {
+      setFirstName(data.data.firstName)
+      setLastName(data.data.lastName)
+    })
+  
+  }, [])
+  
+
+  const updateUser = () => {
     if (firstName && lastName) {
-      axios.put(`${process.env.REACT_APP_BACKEND_URL}/user/${props.user.id}`, { firstName, lastName, isActive: true })
+      axios
+      .put(`${process.env.REACT_APP_BACKEND_URL}/user/${props.id}`, { firstName, lastName })
+      .then(res=> {
+        if(res.status === 200) {
+          toast('User updated!', {theme: 'dark'})
+          navigate('/')
+        }
+        else toast('There was an issue with your request', {theme: 'dark'})
+      })
     } else {
       toast('You need to provide First and Last names', {theme: 'dark'})
     }
@@ -22,7 +43,6 @@ const EditUser = (props: Props) => {
   return (
     <>
       <div className='container mt-8'>
-        <div className='font-sans font-bold text-lg m-2'>Create User</div>
         <form className="w-full max-w-sm mt-8">
           <div className="md:flex md:items-center mb-6">
             <div className="md:w-1/3">
@@ -47,8 +67,8 @@ const EditUser = (props: Props) => {
           <div className="md:flex md:items-center">
             <div className="md:w-1/3"></div>
             <div className="md:w-2/3">
-              <button className="mt-4 shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={() => createUser()}>
-                Create User
+              <button className="mt-4 shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={() => updateUser()}>
+                Update User
               </button>
             </div>
           </div>
@@ -60,4 +80,4 @@ const EditUser = (props: Props) => {
 }
 
 
-export default EditUser
+export default UpdateUser

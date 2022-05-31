@@ -1,0 +1,30 @@
+version: '3'
+services:
+  db:
+    image: 'postgres:latest'
+    container_name: postgres_db
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: gitpod
+      POSTGRES_PASSWORD: gitpod
+      POSTGRES_DB: postgres
+    network_mode: host
+
+  backend:
+    container_name: backend
+    build:
+      context: backend
+      dockerfile: "Dockerfile"
+    network_mode: host
+    ports:
+      - 6379:6379
+
+  frontend:
+    container_name: frontend
+    build:
+      context: frontend
+      dockerfile: "Dockerfile"
+    network_mode: host
+    ports:
+      - 3000:80

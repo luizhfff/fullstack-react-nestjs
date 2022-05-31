@@ -27,7 +27,6 @@ export class UserService {
     const user = new User();
     user.firstName = userDto.firstName;
     user.lastName = userDto.lastName;
-    user.isActive = userDto.isActive
     return this.userRepository.save(user);
   }
 
@@ -35,7 +34,6 @@ export class UserService {
     const user = new User()
     user.firstName = userDto.firstName;
     user.lastName = userDto.lastName;
-    user.isActive = userDto.isActive
     return this.userRepository.save({ ...user, id: Number(id) })
   }
 }

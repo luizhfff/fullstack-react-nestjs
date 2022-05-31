@@ -9,7 +9,11 @@ const CreateUser = () => {
 
   const createUser = () => {
     if (firstName && lastName) {
-      axios.post(`${process.env.REACT_APP_BACKEND_URL}/user`, { firstName, lastName, isActive: true })
+      axios
+      .post(`${process.env.REACT_APP_BACKEND_URL}/user`, { firstName, lastName })
+      .then(res=>{
+        if(res.status === 201) toast('User created!', {theme: 'dark'})
+      })
     } else {
       toast('You need to provide First and Last names', {theme: 'dark'})
     }
