@@ -5,9 +5,7 @@ tasks:
    command: cd backend && npm start
  - name: frontend
    init: cd frontend && npm install --silent
-   command: cd frontend && URL=${gp url} npm start
- - name: test
-   init: echo ${gp url}
+   command: cd frontend && URL=$(gp url) npm start
 
 ports:
  - port: 5432
